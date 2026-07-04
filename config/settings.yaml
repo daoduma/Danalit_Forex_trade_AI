@@ -1,0 +1,52 @@
+# Danalit settings. Secrets are NOT stored here — see README (env vars).
+paths:
+  data_store: data_store
+  models_store: models_store
+  reports: reports
+  logs: logs
+
+broker:
+  magic_number: 20260701
+  leverage: 500            # cent-account style; validated against live account at startup
+
+risk:
+  risk_per_trade: 0.0075   # 0.75% fixed-fractional
+  max_positions: 2
+  max_positions_per_instrument: 1
+  max_total_risk: 0.015
+  daily_loss_limit: 0.03
+  weekly_loss_limit: 0.06
+  max_drawdown: 0.15       # circuit breaker from equity high-water mark
+  consecutive_loss_brake: 4
+  brake_risk_factor: 0.5
+  brake_hours: 24
+  min_lot_risk_cap_mult: 1.5
+
+trading:
+  primary_timeframe: M15
+  loop_interval_sec: 30
+  dry_run: true            # default until deliberately changed
+  weekend_flatten_utc: "20:30"
+
+news:
+  poll_minutes: 5
+  calendar_poll_minutes: 30
+  blackout_minutes: 15
+
+labeling:
+  k_tp: 2.0
+  k_sl: 1.0
+  horizon_bars: 96         # on M15 = 24 hours
+  dead_zone_atr: 0.25
+
+dataset:
+  embargo_days: 5
+
+capital:
+  tier_hysteresis_days: 5
+  min_withdrawal: 25.0
+  tiers:
+    - {max_equity: 50,   instruments: [EURUSD],                 risk_per_trade: 0.0075, set_aside_pct: 0.00}
+    - {max_equity: 200,  instruments: [EURUSD, XAUUSD],         risk_per_trade: 0.0075, set_aside_pct: 0.10}
+    - {max_equity: 1000, instruments: [EURUSD, XAUUSD, US100],  risk_per_trade: 0.01,   set_aside_pct: 0.25}
+    - {max_equity: null, instruments: [EURUSD, XAUUSD, US100],  risk_per_trade: 0.01,   set_aside_pct: 0.40}

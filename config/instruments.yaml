@@ -1,0 +1,54 @@
+# One block per instrument. Canonical name -> broker mapping and contract facts.
+# broker_symbol varies per broker ("XAUUSD" vs "GOLD", "US100" vs "USTEC" vs "NAS100");
+# the gateway validates these against live symbol specs at startup and refuses on mismatch.
+
+EURUSD:
+  broker_symbol: EURUSD
+  pip_size: 0.0001
+  digits: 5
+  contract_size: 100000        # units of base currency per 1.0 lot
+  min_lot: 0.01
+  lot_step: 0.01
+  max_lot: 100.0
+  spread_estimate_pips: 1.2
+  commission_per_lot: 0.0
+  swap_long_pips: -0.6
+  swap_short_pips: 0.15
+  sessions: [london, newyork]
+  enabled: true
+  news_currencies: [USD, EUR]
+  round_number_grid: 0.0050    # 00/50 pip levels
+
+XAUUSD:
+  broker_symbol: XAUUSD
+  pip_size: 0.1                # $0.10 "pip" convention for gold
+  digits: 2
+  contract_size: 100           # 100 oz per 1.0 lot
+  min_lot: 0.01
+  lot_step: 0.01
+  max_lot: 50.0
+  spread_estimate_pips: 2.5
+  commission_per_lot: 0.0
+  swap_long_pips: -3.0
+  swap_short_pips: 1.0
+  sessions: [london, newyork]
+  enabled: true
+  news_currencies: [USD]
+  round_number_grid: 10.0      # $10 levels
+
+US100:
+  broker_symbol: US100
+  pip_size: 1.0                # 1 index point
+  digits: 1
+  contract_size: 1             # $1 per point per 1.0 lot (verify per broker)
+  min_lot: 0.01
+  lot_step: 0.01
+  max_lot: 50.0
+  spread_estimate_pips: 2.0
+  commission_per_lot: 0.0
+  swap_long_pips: -4.0
+  swap_short_pips: -1.0
+  sessions: [newyork]
+  enabled: true
+  news_currencies: [USD]
+  round_number_grid: 100.0     # 100-point levels

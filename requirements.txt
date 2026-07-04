@@ -1,0 +1,23 @@
+# Danalit — full dependency set (all free / open source).
+# For a lightweight dev/test environment see requirements-core.txt.
+pandas>=2.2,<3
+numpy>=1.26,<3
+pyarrow>=15,<21
+pydantic>=2.6,<3
+PyYAML>=6,<7
+requests>=2.31,<3
+beautifulsoup4>=4.12,<5
+feedparser>=6,<7
+lightgbm>=4.3,<5
+scikit-learn>=1.4,<2
+optuna>=3.6,<5
+transformers>=4.40,<5
+torch>=2.2,<3
+stable-baselines3>=2.3,<3
+gymnasium>=0.29,<2
+MetaTrader5>=5.0.45
+APScheduler>=3.10,<4
+streamlit>=1.33,<2
+plotly>=5.20,<7
+python-telegram-bot>=21,<23
+pytest>=8,<9

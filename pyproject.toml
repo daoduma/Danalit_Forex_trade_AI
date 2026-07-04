@@ -1,0 +1,9 @@
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "integration: full-pipeline integration tests (deselect with '-m \"not integration\"')",
+]
+addopts = "-q"
+filterwarnings = [
+    "ignore::DeprecationWarning",
+]

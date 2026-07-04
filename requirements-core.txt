@@ -1,0 +1,17 @@
+# Minimal set to develop and run the test suite (heavy ML/broker deps are
+# lazy-imported and mocked in tests). Install requirements.txt for live use.
+pandas>=2.2,<3
+numpy>=1.26,<3
+pyarrow>=15,<21
+pydantic>=2.6,<3
+PyYAML>=6,<7
+requests>=2.31,<3
+beautifulsoup4>=4.12,<5
+feedparser>=6,<7
+lightgbm>=4.3,<5
+scikit-learn>=1.4,<2
+optuna>=3.6,<5
+gymnasium>=0.29,<2
+APScheduler>=3.10,<4
+plotly>=5.20,<7
+pytest>=8,<9

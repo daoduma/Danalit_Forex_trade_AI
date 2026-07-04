@@ -1,0 +1,25 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# Data, models, reports and logs are artifacts, not source
+data_store/*
+!data_store/.gitkeep
+models_store/*
+!models_store/.gitkeep
+reports/*
+!reports/.gitkeep
+logs/*
+!logs/.gitkeep
+
+# Kill-switch files
+HALT
+HALT_FLAT
+
+# Heartbeats
+*.heartbeat
+
+# Secrets must never be committed
+.env
