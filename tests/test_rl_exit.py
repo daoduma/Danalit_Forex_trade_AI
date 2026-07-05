@@ -64,19 +64,19 @@ def test_close_half_then_timeout_reward_accounting():
 
 def test_tighten_moves_sl_monotonically_and_sl_hit_ends_episode():
     bars = flat_bars(40)
-    # price runs up (so a tightened stop can lock profit), then collapses
-    bars.loc[6:7, ["open", "high", "low", "close"]] = [1.1030, 1.1032, 1.1028, 1.1030]
-    bars.loc[8:, ["open", "high", "low", "close"]] = [1.0980, 1.0982, 1.0978, 1.0980]
+    # entry fills at bar 6 (still flat), price runs up bars 7-8, then collapses
+    bars.loc[7:8, ["open", "high", "low", "close"]] = [1.1030, 1.1032, 1.1028, 1.1030]
+    bars.loc[9:, ["open", "high", "low", "close"]] = [1.0980, 1.0982, 1.0978, 1.0980]
     env = ExitEnv(bars, [entry(t=5)], horizon=20, spread=0.0001, k_tp=50.0)
     env.reset(seed=1)
-    old_sl = env.sl
-    env.step(HOLD)                       # bar 6: price now high
+    old_sl = env.sl                       # 1.1001 - 0.0010 = 1.0991
+    env.step(HOLD)                        # bar 6: flat
     _, _, done, _, _ = env.step(TIGHTEN)  # bar 7: SL -> 1.1030 - 1.0*ATR = 1.1020
     assert env.sl > old_sl and env.sl == pytest.approx(1.1020)
     assert not done
-    # tighten again from a LOWER price must not widen
-    env.sl_before = env.sl
-    _, reward, done, truncated, _ = env.step(TIGHTEN)  # bar 8 gaps under SL first
+    _, _, done, _, _ = env.step(TIGHTEN)  # bar 8: same target -> monotonic no-op
+    assert env.sl == pytest.approx(1.1020) and not done
+    _, reward, done, truncated, _ = env.step(HOLD)  # bar 9 gaps under SL
     assert done and not truncated  # gap exit at the open: episode terminated
 
 
