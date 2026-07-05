@@ -211,6 +211,14 @@ class RiskManager:
         if reason:
             return self._reject(instrument, reason)
 
+        # sizing uses WORKING equity: broker equity minus the virtual set-aside
+        # ledger (Prompt 19) — reserved profits are never re-risked
+        from danalit.risk.capital import set_aside_balance
+
+        equity = equity - set_aside_balance(self.db_path)
+        if equity <= 0:
+            return self._reject(instrument, "working equity <= 0 after set-aside")
+
         tier = self.tier(equity)
         if instrument not in tier.instruments:
             return self._reject(
