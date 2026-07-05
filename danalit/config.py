@@ -41,6 +41,20 @@ class PathsConfig(BaseModel):
 class BrokerConfig(BaseModel):
     magic_number: int = 20260701
     leverage: int = Field(500, gt=0)
+    # 'cents' on a cent account: balances/equity are cents while capital-tier
+    # boundaries stay in USD; risk code converts for tier lookups only.
+    account_units: str = "usd"
+
+    @field_validator("account_units")
+    @classmethod
+    def _units(cls, v: str) -> str:
+        if v not in ("usd", "cents"):
+            raise ValueError("account_units must be 'usd' or 'cents'")
+        return v
+
+    @property
+    def units_per_usd(self) -> float:
+        return 100.0 if self.account_units == "cents" else 1.0
 
     # Credentials live only in the environment.
     @property

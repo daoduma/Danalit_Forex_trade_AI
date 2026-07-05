@@ -8,6 +8,7 @@ paths:
 broker:
   magic_number: 20260701
   leverage: 500            # cent-account style; validated against live account at startup
+  account_units: cents     # balances in cents; tier boundaries stay in USD
 
 risk:
   risk_per_trade: 0.0075   # 0.75% fixed-fractional
