@@ -76,6 +76,17 @@ def main() -> int:
 
     cfg = load_config()
     gateway = MT5Gateway(cfg)
+
+    # Preflight gate: the orchestrator refuses the TRADING state on failure.
+    from danalit.preflight import print_table, run_preflight
+
+    passed, rows = run_preflight()
+    print("preflight:")
+    print_table(rows)
+    if not passed:
+        print("PREFLIGHT FAILED — refusing to start. Fix the FAIL rows above.")
+        return 1
+
     lab = cfg.settings.labeling
     orch = Orchestrator(
         cfg=cfg,
