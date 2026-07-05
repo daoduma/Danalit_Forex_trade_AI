@@ -180,6 +180,11 @@ class Orchestrator:
                 self._transition(HALTED, f"kill switch {ks}")
                 return
             if self.state != TRADING:
+                # explicit resume requested (e.g. Telegram /resume writes RESUME)
+                resume_file = self.kill_dir / "RESUME"
+                if self.state == HALTED and resume_file.exists():
+                    resume_file.unlink()
+                    self.resume()
                 return
 
             account = self.gw.get_account()
