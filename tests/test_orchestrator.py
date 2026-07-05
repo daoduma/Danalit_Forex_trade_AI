@@ -119,7 +119,8 @@ def test_new_bar_detection_including_weekend_gap(tmp_path):
     assert len(orch.journal.decisions_since(epoch)) == n1
     orch._test_state["bar_time"] = BAR_T + pd.Timedelta(days=2, minutes=15)  # weekend gap
     orch.tick()
-    assert len(orch.journal.decisions_since(epoch)) == n1 + 1
+    # one decision per enabled instrument on the new bar (NONEs are journaled too)
+    assert len(orch.journal.decisions_since(epoch)) == n1 + 3
 
 
 def test_kill_switch_halts_and_requires_explicit_resume(tmp_path):
